@@ -1,4 +1,4 @@
-import { Metadata } from 'next'
+
 import { Navbar } from '@/components/shared/home/Navbar'
 import { ChatSidebar } from '@/components/shared/dashboard/pdf-explainer/Chat-sidebar'
 import { ChatInterface } from '@/components/shared/dashboard/pdf-explainer/Chat-interface'
