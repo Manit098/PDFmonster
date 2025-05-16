@@ -30,7 +30,7 @@ export const ChatInterface = ({ pdfName }: ChatInterfaceProps) => {
                 </div>
                 <div>
                   <p className="mb-2">
-                    Hello! I've analyzed your PDF "<strong>{pdfName}</strong>". What would you like to know about it?
+                    Hello! I&apos;ve analyzed your PDF &quot;<strong>{pdfName}</strong>&quot;. What would you like to know about it?
                   </p>
                   <p className="mb-0">You can ask me questions like:</p>
                   <ul className="mb-0 ps-3 mt-2">

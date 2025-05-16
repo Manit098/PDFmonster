@@ -9,7 +9,6 @@ import { FileUpload } from "@/components/shared/dashboard/storage/FileUpload"
 import { FileList } from "@/components/shared/dashboard/storage/FireList"
 
 export default function Storage() {
-  const { user } = useUser()
   const [searchQuery, setSearchQuery] = useState("")
   const [refreshTrigger, setRefreshTrigger] = useState(0)
 

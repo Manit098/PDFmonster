@@ -6,7 +6,7 @@ import "bootstrap/dist/css/bootstrap.min.css"
 import { SignInButton, SignUpButton, UserButton, useUser } from "@clerk/nextjs"
 
 export const Navbar = () => {
-  const { isSignedIn, user } = useUser()
+  const { isSignedIn } = useUser()
 
   return (
     <nav

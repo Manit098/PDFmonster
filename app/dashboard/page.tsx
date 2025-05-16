@@ -124,7 +124,7 @@ export default function Dashboard() {
               <div className="mb-4">
                 <Lock size={48} className="text-warning" />
               </div>
-              <h4>You Don't Have Access To This Feature</h4>
+              <h4>You Dont Have Access To This Feature</h4>
               <p className="text-muted mb-4">Upgrade your plan to unlock PDF Translator and other premium features.</p>
               <Link href="#" className="text-decoration-none">
                 Upgrade Plan
