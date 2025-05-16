@@ -1,8 +1,15 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState, useEffect, useCallback } from "react"
 import { useUser } from "@clerk/nextjs"
-import { ref, listAll, getDownloadURL, getMetadata, deleteObject, updateMetadata } from "firebase/storage"
+import {
+  ref,
+  listAll,
+  getDownloadURL,
+  getMetadata,
+  deleteObject,
+  updateMetadata,
+} from "firebase/storage"
 import { storage } from "@/lib/firebase"
 import { FileText, Trash2, Download, Edit2, Check, X } from "lucide-react"
 import "bootstrap/dist/css/bootstrap.min.css"
@@ -22,7 +29,6 @@ export const FileList = () => {
   const [editingFile, setEditingFile] = useState<string | null>(null)
   const [newFileName, setNewFileName] = useState("")
 
-  // Function to format bytes to human-readable format
   const formatBytes = (bytes: number) => {
     if (bytes === 0) return "0 Bytes"
     const k = 1024
@@ -31,7 +37,6 @@ export const FileList = () => {
     return Number.parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + " " + sizes[i]
   }
 
-  // Function to format date
   const formatDate = (date: Date) => {
     return date.toLocaleDateString("en-US", {
       year: "numeric",
@@ -40,10 +45,9 @@ export const FileList = () => {
     })
   }
 
-  // Load files from Firebase Storage
-  const loadFiles = async () => {
+  // ✅ Wrapped in useCallback for stable reference
+  const loadFiles = useCallback(async () => {
     if (!user) return
-
     setLoading(true)
     try {
       const userFolderRef = ref(storage, `users/${user.id}`)
@@ -69,23 +73,20 @@ export const FileList = () => {
     } finally {
       setLoading(false)
     }
-  }
+  }, [user])
 
-  // Delete a file
   const handleDelete = async (filePath: string) => {
     if (!confirm("Are you sure you want to delete this file?")) return
-
     try {
       const fileRef = ref(storage, filePath)
       await deleteObject(fileRef)
-      await loadFiles() // Reload the file list
+      await loadFiles()
     } catch (error) {
       console.error("Error deleting file:", error)
       alert("Failed to delete file. Please try again.")
     }
   }
 
-  // Download a file
   const handleDownload = (url: string, fileName: string) => {
     const a = document.createElement("a")
     a.href = url
@@ -95,19 +96,16 @@ export const FileList = () => {
     document.body.removeChild(a)
   }
 
-  // Start editing a file name
   const handleStartEdit = (fileName: string) => {
     setEditingFile(fileName)
     setNewFileName(fileName)
   }
 
-  // Cancel editing
   const handleCancelEdit = () => {
     setEditingFile(null)
     setNewFileName("")
   }
 
-  // Save the new file name
   const handleSaveEdit = async (filePath: string) => {
     if (!newFileName.trim() || newFileName === editingFile) {
       handleCancelEdit()
@@ -115,9 +113,6 @@ export const FileList = () => {
     }
 
     try {
-      // In Firebase Storage, we can't directly rename files
-      // We need to download the file, upload it with a new name, and delete the old one
-      // For simplicity, we'll just update the metadata for now
       const fileRef = ref(storage, filePath)
       await updateMetadata(fileRef, {
         customMetadata: {
@@ -125,7 +120,7 @@ export const FileList = () => {
         },
       })
 
-      await loadFiles() // Reload the file list
+      await loadFiles()
       handleCancelEdit()
     } catch (error) {
       console.error("Error renaming file:", error)
@@ -133,11 +128,12 @@ export const FileList = () => {
     }
   }
 
+  // ✅ Include loadFiles in dependency array safely
   useEffect(() => {
     if (user) {
       loadFiles()
     }
-  }, [user])
+  }, [user, loadFiles])
 
   if (loading) {
     return (

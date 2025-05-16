@@ -3,7 +3,6 @@
 import { useState } from "react"
 import "bootstrap/dist/css/bootstrap.min.css"
 import { HardDrive, Search, Download, Trash2 } from "lucide-react"
-import { useUser } from "@clerk/nextjs"
 import { Navbar } from "@/components/shared/dashboard/Navbar"
 import { FileUpload } from "@/components/shared/dashboard/storage/FileUpload"
 import { FileList } from "@/components/shared/dashboard/storage/FireList"
