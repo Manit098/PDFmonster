@@ -3,8 +3,14 @@ import { Navbar } from "@/components/shared/home/Navbar"
 import { ChatSidebar } from "@/components/shared/dashboard/pdf-explainer/Chat-sidebar"
 import { ChatInterface } from "@/components/shared/dashboard/pdf-explainer/Chat-interface"
 
-export default function PDFExplainerChat({ params }: { params: { id: string } }) {
-  // For demo purposes, we'll use a hardcoded PDF name
+interface PDFExplainerPageProps {
+  params: {
+    id: string
+  }
+}
+
+export default function PDFExplainerChat({ params }: PDFExplainerPageProps) {
+  // Replace this with actual logic if needed
   const pdfName = "Sample Document.pdf"
 
   return (
